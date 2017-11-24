@@ -1,0 +1,33 @@
+body.background{
+	background-image: url(/PhotoManagementSystem/src/background.jpg) !important;
+	background-repeat: no-repeat !important;
+	background-size: cover !important;
+	background-attachment: fixed !important;
+}
+body.background-main{
+	background-image: url(/PhotoManagementSystem/src/background-2.jpg) !important;
+	background-repeat: no-repeat !important;
+	background-size: cover !important;
+	background-attachment: fixed !important;
+}
+
+body > .grid {
+	height: 100%;
+}
+.image {
+	margin-top: -100px;
+}
+.column {
+	max-width: 450px;
+}
+.fixed-width {
+	width: 300px;
+	height:300px;
+	min-width: 300px;
+	min-height:200px;
+	border:1px solid #000000;
+}
+
+#inline{
+	display: inline;
+}

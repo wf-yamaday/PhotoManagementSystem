@@ -1,0 +1,187 @@
+-- MySQL dump 10.13  Distrib 5.7.18, for osx10.12 (x86_64)
+--
+-- Host: localhost    Database: album_manage
+-- ------------------------------------------------------
+-- Server version	5.7.18
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `album`
+--
+
+DROP TABLE IF EXISTS `album`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `album` (
+  `album_id` int(11) NOT NULL AUTO_INCREMENT,
+  `album_name` varchar(64) NOT NULL DEFAULT '',
+  `year` int(4) NOT NULL,
+  `album_activation` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`album_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `album`
+--
+
+LOCK TABLES `album` WRITE;
+/*!40000 ALTER TABLE `album` DISABLE KEYS */;
+/*!40000 ALTER TABLE `album` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `album_manage_info`
+--
+
+DROP TABLE IF EXISTS `album_manage_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `album_manage_info` (
+  `user_id` varchar(16) NOT NULL DEFAULT '',
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `album_id` int(11) NOT NULL,
+  KEY `no` (`user_id`),
+  KEY `yes` (`album_id`),
+  CONSTRAINT `album_manage_info_ibfk_2` FOREIGN KEY (`album_id`) REFERENCES `album` (`album_id`),
+  CONSTRAINT `album_manage_info_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `album_manage_info`
+--
+
+LOCK TABLES `album_manage_info` WRITE;
+/*!40000 ALTER TABLE `album_manage_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `album_manage_info` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `information`
+--
+
+DROP TABLE IF EXISTS `information`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `information` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(16) NOT NULL DEFAULT '',
+  `action` text NOT NULL,
+  `execution_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `information_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `information`
+--
+
+LOCK TABLES `information` WRITE;
+/*!40000 ALTER TABLE `information` DISABLE KEYS */;
+/*!40000 ALTER TABLE `information` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `photo`
+--
+
+DROP TABLE IF EXISTS `photo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `photo` (
+  `photo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `photo_name` varchar(64) DEFAULT NULL,
+  `path` text NOT NULL,
+  `activation` int(1) NOT NULL DEFAULT '0',
+  `album_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`photo_id`),
+  KEY `album_id` (`album_id`),
+  CONSTRAINT `album_id` FOREIGN KEY (`album_id`) REFERENCES `album` (`album_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `photo`
+--
+
+LOCK TABLES `photo` WRITE;
+/*!40000 ALTER TABLE `photo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `photo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `photo_manage_info`
+--
+
+DROP TABLE IF EXISTS `photo_manage_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `photo_manage_info` (
+  `album_id` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `photo_id` int(11) NOT NULL,
+  KEY `no` (`album_id`),
+  KEY `yes` (`photo_id`),
+  CONSTRAINT `photo_manage_info_ibfk_1` FOREIGN KEY (`album_id`) REFERENCES `album` (`album_id`),
+  CONSTRAINT `photo_manage_info_ibfk_2` FOREIGN KEY (`photo_id`) REFERENCES `photo` (`photo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `photo_manage_info`
+--
+
+LOCK TABLES `photo_manage_info` WRITE;
+/*!40000 ALTER TABLE `photo_manage_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `photo_manage_info` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `user_id` varchar(16) NOT NULL DEFAULT '',
+  `user_name` varchar(64) NOT NULL DEFAULT '',
+  `password` text NOT NULL,
+  `role` int(1) NOT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES ('admin','admin','mallow',1);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-10-22 21:31:08
